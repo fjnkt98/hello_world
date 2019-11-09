@@ -27,15 +27,14 @@ namespace hello_world_cpp{
 
     private:
       size_t count_ = 1;
-      std::unique_ptr<std_msgs::msg::String> msg_;
+      std_msgs::msg::String msg_;
       rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
       rclcpp::TimerBase::SharedPtr timer_;
 
       void publish_message(){
-        msg_ = std::make_unique<std_msgs::msg::String>();
-        msg_->data = "Hello world: " + std::to_string(count_);
-        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", msg_->data.c_str());
-        pub_->publish(std::move(msg_));
+        msg_.data = "Hello world: " + std::to_string(count_++);
+        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", msg_.data.c_str());
+        pub_->publish(msg_);
       }
   }; // class Talker
 } // namespace hello_world_cpp
