@@ -21,19 +21,8 @@ namespace hello_world_cpp{
         : Node("talker", options)
       {
         setvbuf(stdout, NULL, _IONBF, BUFSIZ);
-
-        auto publish_message = 
-          [this]() -> void{
-            msg_ = std::make_unique<std_msgs::msg::String>();
-            msg_->data = "Hello world: " + std::to_string(count_++);
-
-            RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", msg_->data.c_str());
-
-            pub_->publish(std::move(msg_));
-          };
-
         pub_ = this->create_publisher<std_msgs::msg::String>("chatter", rclcpp::SystemDefaultsQoS());
-        timer_ = this->create_wall_timer(1s, publish_message);
+        timer_ = this->create_wall_timer(1s, std::bind(&Talker::publish_message, this));
       }
 
     private:
@@ -41,6 +30,13 @@ namespace hello_world_cpp{
       std::unique_ptr<std_msgs::msg::String> msg_;
       rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
       rclcpp::TimerBase::SharedPtr timer_;
+
+      void publish_message(){
+        msg_ = std::make_unique<std_msgs::msg::String>();
+        msg_->data = "Hello world: " + std::to_string(count_);
+        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", msg_->data.c_str());
+        pub_->publish(std::move(msg_));
+      }
   }; // class Talker
 } // namespace hello_world_cpp
 

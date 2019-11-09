@@ -16,17 +16,14 @@ namespace hello_world_cpp{
         :Node("listener", options)
       {
         setvbuf(stdout, NULL, _IONBF, BUFSIZ);
-
-        auto callback = 
-          [this](const typename std_msgs::msg::String::SharedPtr msg) -> void{
-            RCLCPP_INFO(this->get_logger(), "I heard: [%s]", msg->data.c_str());
-          };
-
-        sub_ = create_subscription<std_msgs::msg::String>("chatter", rclcpp::SystemDefaultsQoS(), callback);
+        sub_ = create_subscription<std_msgs::msg::String>("chatter", rclcpp::SystemDefaultsQoS(), std::bind(&Listener::callback, this, std::placeholders::_1));
       }
 
     private:
       rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
+      void callback(const std_msgs::msg::String::SharedPtr msg){
+        RCLCPP_INFO(this->get_logger(), "I heard: [%s]", msg->data.c_str());
+      }
   }; // class Listener
 } //namespace hello_world_cpp
 
