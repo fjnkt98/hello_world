@@ -1,5 +1,5 @@
-#ifndef HELLO_WORLD_CPP__TALKER_HPP
-#define HELLO_WORLD_CPP__TALKER_HPP
+#ifndef HELLO_WORLD_CPP__TALKER_HPP_
+#define HELLO_WORLD_CPP__TALKER_HPP_
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
@@ -21,4 +21,4 @@ namespace hello_world_cpp{
   };
 } // namespace hello_world_cpp
 
-#endif // HELLO_WORLD_CPP__TALKER_HPP
+#endif // HELLO_WORLD_CPP__TALKER_HPP_
