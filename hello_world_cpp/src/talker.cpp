@@ -9,34 +9,25 @@
 #include "std_msgs/msg/string.hpp"
 
 #include "hello_world_cpp/visibility_control.h"
+#include "hello_world_cpp/talker.hpp"
 
 using namespace std::chrono_literals;
 
 namespace hello_world_cpp{
-  class Talker : public rclcpp::Node{
-    public:
-      HELLO_WORLD_CPP_PUBLIC
+  Talker::Talker(const rclcpp::NodeOptions &options)
+    : Node("talker", options), count_(1)
+  {
+    setvbuf(stdout, NULL, _IONBF, BUFSIZ);
+    pub_ = this->create_publisher<std_msgs::msg::String>("chatter", rclcpp::SystemDefaultsQoS());
+    timer_ = this->create_wall_timer(1s, std::bind(&Talker::publish_message, this));
+  }
 
-      explicit Talker(const rclcpp::NodeOptions &options)
-        : Node("talker", options)
-      {
-        setvbuf(stdout, NULL, _IONBF, BUFSIZ);
-        pub_ = this->create_publisher<std_msgs::msg::String>("chatter", rclcpp::SystemDefaultsQoS());
-        timer_ = this->create_wall_timer(1s, std::bind(&Talker::publish_message, this));
-      }
 
-    private:
-      size_t count_ = 1;
-      std_msgs::msg::String msg_;
-      rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
-      rclcpp::TimerBase::SharedPtr timer_;
-
-      void publish_message(){
-        msg_.data = "Hello world: " + std::to_string(count_++);
-        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", msg_.data.c_str());
-        pub_->publish(msg_);
-      }
-  }; // class Talker
+  void Talker::publish_message(){
+    msg_.data = "Hello world: " + std::to_string(count_++);
+    RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", msg_.data.c_str());
+    pub_->publish(msg_);
+  }
 } // namespace hello_world_cpp
 
 RCLCPP_COMPONENTS_REGISTER_NODE(hello_world_cpp::Talker)
