@@ -16,7 +16,7 @@ namespace hello_world_cpp{
     public:
       HELLO_WORLD_CPP_PUBLIC
       explicit Parameter(const rclcpp::NodeOptions &options)
-        :Node("talker_with_param", options), decoration_("")
+        :Node("parameter", options), decoration_("")
       {
         setvbuf(stdout, NULL, _IONBF, BUFSIZ);
 
