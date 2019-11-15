@@ -45,7 +45,7 @@ ament_target_dependencies(listener
 rclcpp_components_register_nodes(listener
   "hello_world_cpp::Listener")
 
-# create shared library fo server node
+# create shared library for server node
 add_library(server SHARED
   src/server.cpp)
 target_compile_definitions(server
@@ -57,7 +57,7 @@ ament_target_dependencies(server
 rclcpp_components_register_nodes(server
   "hello_world_cpp::ServerNode")
 
-# create shared library fo client node
+# create shared library for client node
 add_library(client SHARED
   src/client.cpp)
 target_compile_definitions(client
@@ -69,11 +69,23 @@ ament_target_dependencies(client
 rclcpp_components_register_nodes(client
   "hello_world_cpp::ClientNode")
 
+# create shared library for talker with param node
+add_library(parameter SHARED
+  src/parameter.cpp)
+target_compile_definitions(parameter
+  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+ament_target_dependencies(parameter
+  "rclcpp"
+  "rclcpp_components")
+rclcpp_components_register_nodes(parameter
+  "hello_world_cpp::Parameter")
+
 install(TARGETS
   talker
   listener
   server
   client
+  parameter
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
