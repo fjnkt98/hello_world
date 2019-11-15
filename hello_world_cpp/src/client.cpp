@@ -22,12 +22,7 @@ public:
   {
     setvbuf(stdout, NULL, _IONBF, BUFSIZ);
     client_ = create_client<hello_world_msgs::srv::AddTwoInts>("add_two_ints");
-    queue_async_request();
-  }
 
-  HELLO_WORLD_CPP_PUBLIC
-  void queue_async_request()
-  {
     while (!client_->wait_for_service(1s)) {
       if (!rclcpp::ok()) {
         RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
@@ -39,22 +34,16 @@ public:
     request->a = 2;
     request->b = 3;
 
-    // We give the async_send_request() method a callback that will get executed once the response
-    // is received.
-    // This way we can return immediately from this method and allow other work to be done by the
-    // executor in `spin` while waiting for the response.
-    using ServiceResponseFuture =
-      rclcpp::Client<hello_world_msgs::srv::AddTwoInts>::SharedFuture;
-    auto response_received_callback = [this](ServiceResponseFuture future) {
-        auto result = future.get();
-        RCLCPP_INFO(this->get_logger(), "Result of add_two_ints: %" PRId64, result->sum);
-        rclcpp::shutdown();
-      };
-    auto future_result = client_->async_send_request(request, response_received_callback);
+    auto future_result = client_->async_send_request(request, std::bind(&ClientNode::response_received_callback, this, std::placeholders::_1));
   }
 
 private:
   rclcpp::Client<hello_world_msgs::srv::AddTwoInts>::SharedPtr client_;
+  void response_received_callback(rclcpp::Client<hello_world_msgs::srv::AddTwoInts>::SharedFuture future){
+    auto result = future.get();
+    RCLCPP_INFO(get_logger(), "Result of add_two_ints: %" PRId64, result->sum);
+    rclcpp::shutdown();
+  }
 };
 
 }  // namespace hello_world_cpp
