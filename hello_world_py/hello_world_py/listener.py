@@ -19,12 +19,12 @@ class Listener(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    listener = Listener()
-
-    rclpy.spin(listener)
-
-    listener.destroy_node()
-    rclpy.shutdown()
+    try:
+        listener = Listener()
+        rclpy.spin(listener)
+    finally:
+        listener.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

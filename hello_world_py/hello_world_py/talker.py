@@ -20,12 +20,12 @@ class Talker(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    talker = Talker()
-
-    rclpy.spin(talker)
-    
-    talker.destroy_node()
-    rclpy.shutdown()
+    try:
+        talker = Talker()
+        rclpy.spin(talker)
+    finally:
+        talker.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
