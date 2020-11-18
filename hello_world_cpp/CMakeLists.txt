@@ -50,46 +50,46 @@ rclcpp_components_register_nodes(listener_component
   "hello_world_cpp::Listener")
 
 # create shared library for server node
-add_library(server SHARED
-  src/server.cpp)
-target_compile_definitions(server
-  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-ament_target_dependencies(server
-  "rclcpp"
-  "rclcpp_components"
-  "hello_world_msgs")
-rclcpp_components_register_nodes(server
-  "hello_world_cpp::ServerNode")
+#add_library(server SHARED
+#  src/server.cpp)
+#target_compile_definitions(server
+#  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+#ament_target_dependencies(server
+#  "rclcpp"
+#  "rclcpp_components"
+#  "hello_world_msgs")
+#rclcpp_components_register_nodes(server
+#  "hello_world_cpp::ServerNode")
 
 # create shared library for client node
-add_library(client SHARED
-  src/client.cpp)
-target_compile_definitions(client
-  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-ament_target_dependencies(client
-  "rclcpp"
-  "rclcpp_components"
-  "hello_world_msgs")
-rclcpp_components_register_nodes(client
-  "hello_world_cpp::ClientNode")
+#add_library(client SHARED
+#  src/client.cpp)
+#target_compile_definitions(client
+#  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+#ament_target_dependencies(client
+#  "rclcpp"
+#  "rclcpp_components"
+#  "hello_world_msgs")
+#rclcpp_components_register_nodes(client
+#  "hello_world_cpp::ClientNode")
 
 # create shared library for talker with param node
-add_library(parameter SHARED
-  src/parameter.cpp)
-target_compile_definitions(parameter
-  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-ament_target_dependencies(parameter
-  "rclcpp"
-  "rclcpp_components")
-rclcpp_components_register_nodes(parameter
-  "hello_world_cpp::Parameter")
+#add_library(parameter SHARED
+#  src/parameter.cpp)
+#target_compile_definitions(parameter
+#  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+#ament_target_dependencies(parameter
+#  "rclcpp"
+#  "rclcpp_components")
+#rclcpp_components_register_nodes(parameter
+#  "hello_world_cpp::Parameter")
 
 install(TARGETS
   talker_component
   listener_component
-  server
-  client
-  parameter
+  #server
+  #client
+  #parameter
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)

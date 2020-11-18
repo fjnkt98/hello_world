@@ -1,14 +1,15 @@
-#ifndef HELLO_WORLD_CPP__LISTENER_HPP_
-#define HELLO_WORLD_CPP__LISTENER_HPP_
+#ifndef HELLO_WORLD_CPP_LISTENER_COMPONENT_HPP_
+#define HELLO_WORLD_CPP_LISTENER_COMPONENT_HPP_
 
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/string.h>
+#include <std_msgs/msg/string.hpp>
+
+#include <hello_world_cpp/visibility.h>
 
 namespace hello_world_cpp{
   class Listener : public rclcpp::Node{
     public:
       HELLO_WORLD_CPP_PUBLIC
-
       explicit Listener(const rclcpp::NodeOptions &options);
 
     private:
@@ -18,4 +19,4 @@ namespace hello_world_cpp{
   };
 } // namespace hello_world_cpp
 
-#endif // HELLO_WORLD_CPP__LISTENER_HPP_
+#endif // HELLO_WORLD_CPP_LISTENER_COMPONENT_HPP_

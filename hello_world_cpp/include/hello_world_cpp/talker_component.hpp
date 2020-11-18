@@ -1,14 +1,15 @@
-#ifndef HELLO_WORLD_CPP__TALKER_HPP_
-#define HELLO_WORLD_CPP__TALKER_HPP_
+#ifndef HELLO_WORLD_CPP_TALKER_COMPONENT_HPP_
+#define HELLO_WORLD_CPP_TALKER_COMPONENT_HPP_
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
+
+#include <hello_world_cpp/visibility.h>
 
 namespace hello_world_cpp{
   class Talker : public rclcpp::Node{
     public:
       HELLO_WORLD_CPP_PUBLIC
-
       explicit Talker(const rclcpp::NodeOptions &options);
 
     private:
@@ -17,8 +18,8 @@ namespace hello_world_cpp{
       rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
       rclcpp::TimerBase::SharedPtr timer_;
 
-      void publish_message();
+      void publishMessage();
   };
 } // namespace hello_world_cpp
 
-#endif // HELLO_WORLD_CPP__TALKER_HPP_
+#endif // HELLO_WORLD_CPP_TALKER_COMPONENT_HPP_
