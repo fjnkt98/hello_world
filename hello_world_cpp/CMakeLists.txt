@@ -22,27 +22,31 @@ find_package(std_msgs REQUIRED)
 include_directories(include)
 
 # create shared library for talker node
-add_library(talker SHARED
-  src/talker.cpp)
-target_compile_definitions(talker
-  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-ament_target_dependencies(talker
+add_library(talker_component SHARED
+  src/talker_component.cpp
+)
+target_compile_definitions(talker_component
+  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL"
+)
+ament_target_dependencies(talker_component
   "rclcpp"
   "rclcpp_components"
-  "std_msgs")
-rclcpp_components_register_nodes(talker
-  "hello_world_cpp::Talker")
+  "std_msgs"
+)
+rclcpp_components_register_nodes(talker_component
+  "hello_world_cpp::Talker"
+)
 
 # create shared library for listener node
-add_library(listener SHARED
-  src/listener.cpp)
-target_compile_definitions(listener
+add_library(listener_component SHARED
+  src/listener_component.cpp)
+target_compile_definitions(listener_component
   PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-ament_target_dependencies(listener
+ament_target_dependencies(listener_component
   "rclcpp"
   "rclcpp_components"
   "std_msgs")
-rclcpp_components_register_nodes(listener
+rclcpp_components_register_nodes(listener_component
   "hello_world_cpp::Listener")
 
 # create shared library for server node
@@ -81,8 +85,8 @@ rclcpp_components_register_nodes(parameter
   "hello_world_cpp::Parameter")
 
 install(TARGETS
-  talker
-  listener
+  talker_component
+  listener_component
   server
   client
   parameter
