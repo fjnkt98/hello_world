@@ -51,7 +51,9 @@ namespace hello_world_cpp {
     // for each parameters;
     for (auto param : params) {
       if (param.get_name() == "decoration") {
+        // Update class member variable 
         decoration_ = param.as_string();
+
         result.successful = true;
       }
     }
