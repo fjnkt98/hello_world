@@ -74,22 +74,24 @@ rclcpp_components_register_nodes(client_component_async
   "hello_world_cpp::ClientAsync")
 
 # create shared library for talker with param node
-#add_library(parameter SHARED
-#  src/parameter.cpp)
-#target_compile_definitions(parameter
-#  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-#ament_target_dependencies(parameter
-#  "rclcpp"
-#  "rclcpp_components")
-#rclcpp_components_register_nodes(parameter
-#  "hello_world_cpp::Parameter")
+add_library(parameter_component SHARED
+  src/parameter_component.cpp)
+target_compile_definitions(parameter_component
+  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+ament_target_dependencies(parameter_component
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+)
+rclcpp_components_register_nodes(parameter_component
+  "hello_world_cpp::Parameter")
 
 install(TARGETS
   talker_component
   listener_component
   server_component
   client_component_async
-  #parameter
+  parameter_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
