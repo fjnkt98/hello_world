@@ -62,16 +62,16 @@ rclcpp_components_register_nodes(server_component
   "hello_world_cpp::Server")
 
 # create shared library for client node
-#add_library(client SHARED
-#  src/client.cpp)
-#target_compile_definitions(client
-#  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
-#ament_target_dependencies(client
-#  "rclcpp"
-#  "rclcpp_components"
-#  "hello_world_msgs")
-#rclcpp_components_register_nodes(client
-#  "hello_world_cpp::ClientNode")
+add_library(client_component_async SHARED
+  src/client_component_async.cpp)
+target_compile_definitions(client_component_async
+  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+ament_target_dependencies(client_component_async
+  "rclcpp"
+  "rclcpp_components"
+  "hello_world_msgs")
+rclcpp_components_register_nodes(client_component_async
+  "hello_world_cpp::ClientAsync")
 
 # create shared library for talker with param node
 #add_library(parameter SHARED
@@ -88,7 +88,7 @@ install(TARGETS
   talker_component
   listener_component
   server_component
-  #client
+  client_component_async
   #parameter
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
