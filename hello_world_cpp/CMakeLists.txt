@@ -16,6 +16,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
 find_package(hello_world_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
@@ -86,12 +87,27 @@ ament_target_dependencies(parameter_component
 rclcpp_components_register_nodes(parameter_component
   "hello_world_cpp::Parameter")
 
+# create shared library for lifecycle talker node
+add_library(lifecycle_talker_component SHARED
+  src/lifecycle_talker_component.cpp)
+target_compile_definitions(lifecycle_talker_component
+  PRIVATE "HELLO_WORLD_CPP_BUILDING_DLL")
+ament_target_dependencies(lifecycle_talker_component
+  "rclcpp"
+  "rclcpp_components"
+  "rclcpp_lifecycle"
+  "std_msgs"
+)
+rclcpp_components_register_nodes(lifecycle_talker_component
+  "hello_world_cpp::LifecycleTalker")
+
 install(TARGETS
   talker_component
   listener_component
   server_component
   client_component_async
   parameter_component
+  lifecycle_talker_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
