@@ -20,8 +20,6 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(hello_world_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
-include_directories(include)
-
 # create shared library for talker node
 add_library(talker_component SHARED
   src/talker_component.cpp
@@ -34,6 +32,10 @@ ament_target_dependencies(talker_component
   "rclcpp_components"
   "std_msgs"
 )
+target_include_directories(talker_component
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(talker_component
   "hello_world_cpp::Talker"
 )
@@ -47,6 +49,10 @@ ament_target_dependencies(listener_component
   "rclcpp"
   "rclcpp_components"
   "std_msgs")
+target_include_directories(listener_component
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(listener_component
   "hello_world_cpp::Listener")
 
@@ -59,6 +65,10 @@ ament_target_dependencies(server_component
   "rclcpp"
   "rclcpp_components"
   "hello_world_msgs")
+target_include_directories(server_component
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(server_component
   "hello_world_cpp::Server")
 
@@ -71,6 +81,10 @@ ament_target_dependencies(client_component_async
   "rclcpp"
   "rclcpp_components"
   "hello_world_msgs")
+target_include_directories(client_component_async
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(client_component_async
   "hello_world_cpp::ClientAsync")
 
@@ -84,6 +98,10 @@ ament_target_dependencies(parameter_component
   "rclcpp_components"
   "std_msgs"
 )
+target_include_directories(parameter_component
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(parameter_component
   "hello_world_cpp::Parameter")
 
@@ -98,6 +116,10 @@ ament_target_dependencies(lifecycle_talker_component
   "rclcpp_lifecycle"
   "std_msgs"
 )
+target_include_directories(lifecycle_talker_component
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 rclcpp_components_register_nodes(lifecycle_talker_component
   "hello_world_cpp::LifecycleTalker")
 
